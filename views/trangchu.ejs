@@ -1,0 +1,200 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Demo Socket</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="process.js"></script>
+
+    <style>
+        body {background-color: powderblue;text-align: center;}
+        h1   {color: red;}
+ 
+    .switch {                    
+        position: relative; /* dung de thiet lap mot phan tu su dung cac thuoc tinh position mà khong anh huong den viec hien thi ban dau*/
+        display: inline-block; /* chuyen phan tu ve hien thi tren cung mot hang nhung no van tua huong cac dac tinh cua block nhu co the tùy chinh kich thuoc*/
+        width: 60px;           
+        height: 34px;
+    }
+        
+           
+    .switch input {display:none;}
+
+        /* tao khung vuong */
+    .slider {
+        position: absolute;/* dung de thiet lap vi tri cua mot phan tu nhung no se luon nam trong mot phan tu me la relative*/
+        cursor: pointer;/* hinh dang mot ban tay */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+        transition: .4s;
+        }
+
+        /* tao con tro dat trong khung*/
+    .slider:before {
+        position: absolute;
+        content: "";             /* noi dung trong dau ngoac se duoc them vao thanh phan */
+        height: 26px; 
+        width: 26px;
+        left: 4px;
+        bottom: 4px;            /* xac dinh vi tri duoi cung cua thanh phan duoc dinh vi tri*/
+        background-color: black;
+        transition: .4s;
+        }
+
+        /* khi nhan sex doi mau */
+        input:checked + .slider { 
+            background-color: #2196F3;
+        }
+
+        /* thành phần click khi dc ch�?n*/
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;         /* Dinh khoang cach mo cho bong*/
+        }
+
+        /*dung de di chuyen con tro theo truc X*/
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);      /* chuyen dong theo truc X*/      
+            transform: translateX(26px);
+        }
+ 
+    /* Rounded sliders: uon cong 4 goc cua hinh ngoai*/  
+        .slider.round {
+            border-radius: 34px;             /* uon cong 4 goc cua hinh vuong*/
+        }
+
+        .slider.round:before {
+            border-radius: 50%;             /* uon cong 4 goc cua con tro */
+        } 
+
+    /* tạo khối cho switch */
+        #cot1{      
+    /*  background-color:red;*/
+            float: left;                     /* chuyen khoi sang trai*/
+            width: 100px;                      /* chinh do rong cua khoi*/
+            text-align: center;               /* dich chuyen chu sang trai*/
+        }
+
+    /* tạo khối cho trạng thái thiết bị */
+        #cot2{      
+    /* background-color:blue; */                 
+            float:right ;                        /* chuyen khoi sang phai*/          
+            width:660px;                        /* chinh do rong cua khoi*/
+            text-align:left;                   /* dich chuyen chu sang trai*/
+        }
+
+    /* tạo khối cho tên công tắc */
+        #cot3{       
+    /* background-color:yellow;  */              
+            float:left ;                  /* chuyen khoi sang trai*/
+            width: 570px;                 /* chinh do rong cua khoi*/
+            text-align:right;              /* dich chuyen chu sang phải*/
+        }      
+
+</style>
+</head>
+
+<body>
+    <img src="http://caothang.edu.vn/templates/images/logo.png" alt="Logo CKC"width="150" height="200"  align="left" />
+    
+    <br><br>
+        <h1>THIẾT KẾ VÀ THI CÔNG MODULE �?IỀU KHIỂN THIẾT BỊ QUA INTERNET DỰA TRÊN MODULE ESP8266</h1>
+    </br></br>
+
+    <br>
+        <input type="text" id="ROOM-NAME" placeholder="USER" />
+        <input type="button" id="CREATE-ROOM" value="CONFIRM">
+    </br>
+
+    <div id="cot3">
+        <br><br> 
+            CÔNG TẮC 1: 
+        </br></br>
+
+        <br><br>
+            CÔNG TẮC 2:
+        </br></br>
+
+        <br><br>
+            CÔNG TẮC 3:
+        </br></br>
+
+        <br><br>
+            CÔNG TẮC 4:
+        </br></br>
+
+        <br><br>
+            CÔNG TẮC 5:
+        </br></br>
+    </div>
+
+    <div id="cot1">
+        <br>   
+            <!--thuoc tinh class chu yeu duoc su dung de tro toi mot class trong CSS//-->
+            <label class="switch">                                <!-- <label> dinh nghia nhan cho phan  <input />.-->
+            <input type="checkbox" onchange="event0()" id="device0" >
+            <span  class="slider round"></span>                       <!-- <span> dung de dinh dang kem voi CSS de dinh dang noi dung of HTML-->
+            </label><br/>
+            <label id="off0"> OFF </label>
+        </br>
+
+        <br>
+            <label class="switch">
+            <input type="checkbox" onchange="event1()" id="device1">
+            <span class="slider round"></span>
+            </label><br/>
+            <label id="off1"> OFF </label>
+        </br>
+
+        <br>
+            <label class="switch">     
+            <input type="checkbox" onchange="event2()" id="device2">
+            <span  class="slider round"></span>
+            </label><br/>
+            <label id="off2"> OFF </label>
+        </br>
+
+        <br>
+            <label class="switch">
+            <input type="checkbox" onchange="event3()" id="device3">
+            <span  class="slider round"></span>
+            </label><br/>
+            <label id="off3">OFF</label>
+        </br>
+
+        <br>
+            <label class="switch">
+            <input type="checkbox" onchange="event4()" id="device4">
+            <span class="slider round"></span>
+            </label><br/>
+            <label id="off4"> OFF </label>
+        </br>
+    </div>
+
+    <div id="cot2">
+        <br><br>
+            THIẾT BỊ 1: <label id="status0"> OFF </label>
+        </br></br>  
+
+        <br><br>
+            THIẾT BỊ 2: <label id="status1"> OFF </label>
+        </br></br>
+
+        <br><br>
+            THIẾT BỊ 3: <label id="status2"> OFF </label>
+        </br></br>
+
+        <br><br>
+            THIẾT BỊ 4: <label id="status3"> OFF </label>
+        </br></br>
+
+        <br><br>
+            THIẾT BỊ 5: <label id="status4"> OFF </label>
+        </br></br>
+    </div>
+
+</body>
+</html>
